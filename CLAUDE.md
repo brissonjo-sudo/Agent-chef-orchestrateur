@@ -9,19 +9,18 @@ synthétise. Conçu pour optimiser le rendement qualité/token.
 ```
 .claude/agents/
 ├── capitaine-america.md   # Opus   — décompose, analyse, route, synthétise
-├── chercheur.md       # Haiku  — collecte / lecture volumineuse (amont)
-├── juriste.md         # Opus   — droit français (skill recherche-juridique)
-├── redacteur.md       # Sonnet — rédaction + accessibilité TDAH
-├── trieur.md          # Haiku  — extraction / classement
-├── verificateur.md    # Sonnet — contrôle qualité du livrable (aval)
-└── archiviste.md      # Haiku  — capte les leçons en mémoire (apprentissage)
-```
+├── chercheur.md           # Haiku  — collecte / lecture volumineuse (amont)
+├── juriste.md             # Opus   — droit français (skill recherche-juridique)
+├── redacteur.md           # Sonnet — rédaction + accessibilité TDAH
+├── trieur.md              # Haiku  — extraction / classement
+├── verificateur.md        # Sonnet — contrôle qualité du livrable (aval)
+└── archiviste.md          # Haiku  — capte les leçons en mémoire (apprentissage)
 
-memoire/                # Mémoire d'expérience (relue à chaque run)
-├── index.md            # carte des leçons — lue en premier, recherche Grep
-├── lecons.md           # leçons transverses
-├── lecons-juridique.md # leçons domaine droit
-└── journal.md          # historique des runs (tâches longues)
+memoire/                   # Mémoire d'expérience (relue à chaque run)
+├── index.md               # carte des leçons — lue en premier, recherche Grep
+├── lecons.md              # leçons transverses
+├── lecons-juridique.md    # leçons domaine droit
+└── journal.md             # historique des runs (tâches longues)
 ```
 
 ## Pipeline type
@@ -31,13 +30,14 @@ memoire/                # Mémoire d'expérience (relue à chaque run)
 
 ## Routage (qualité/token optimisé)
 
-| Type de sous-tâche               | Sous-agent      | Modèle |
-|----------------------------------|-----------------|--------|
-| Collecte, recherche brute, lecture | `chercheur`   | Haiku  |
-| Droit français, acte officiel    | `juriste`       | Opus   |
-| Rédaction, synthèse rédigée      | `redacteur`     | Sonnet |
-| Extraction, tri, classement      | `trieur`        | Haiku  |
-| Contrôle qualité du livrable     | `verificateur`  | Sonnet |
+| Type de sous-tâche                 | Sous-agent      | Modèle |
+|------------------------------------|-----------------|--------|
+| Collecte, recherche brute, lecture | `chercheur`     | Haiku  |
+| Droit français, acte officiel      | `juriste`       | Opus   |
+| Rédaction, synthèse rédigée        | `redacteur`     | Sonnet |
+| Extraction, tri, classement        | `trieur`        | Haiku  |
+| Contrôle qualité du livrable        | `verificateur`  | Sonnet |
+| Capture des leçons (fin de run)    | `archiviste`    | Haiku  |
 
 Logique de découpe : on sépare la **collecte bruyante** (chercheur, Haiku)
 du **raisonnement** (juriste/Capitaine America, Opus), et on ajoute un filet
@@ -68,6 +68,9 @@ Garde-fous (sinon la mémoire devient du bruit coûteux) :
 - Déduplication obligatoire avant écriture.
 - Leçon douteuse marquée `⚠ à confirmer`, validée plus tard.
 - Pas de donnée sensible dans une leçon : on écrit la règle, pas le cas.
+- **Hygiène de croissance** : `journal.md` est archivé/purgé périodiquement
+  (ex. rotation mensuelle) et `index.md` reste plafonné — la mémoire ne doit
+  pas grossir indéfiniment, sinon son coût de relecture annule le gain.
 
 Complément natif possible : l'**auto memory** de Claude Code (notes que
 Claude écrit depuis tes corrections, chargées au démarrage) peut tourner
@@ -82,11 +85,11 @@ re-résumé est lossy et peut aplatir des réserves critiques (réserves
 juridiques, abstentions). Consigne à appliquer :
 
 > « Restitue la sortie de Capitaine America sans la résumer, sauf demande
->   contraire explicite. »
+> contraire explicite. »
 
 Réglage modèle principal recommandé : **Sonnet** (pas Haiku — Haiku au
 sommet plafonne le tier des sous-agents et route mal). Opus réservé à
-Capitaine America et au `juriste`.
+Capitaine America et au `juriste`. (Réglage côté application/CLI, hors repo.)
 
 ## Utilisation
 
@@ -106,12 +109,16 @@ Invocation directe d'un sous-agent :
 
 - 1 sous-agent = 1 responsabilité = 1 fichier.
 - Modèle verrouillé dans le frontmatter (`model:`) → coût prévisible.
+- Outil de délégation : `Agent` dans le `tools:` de `capitaine-america`
+  (nom actuel de l'outil de sous-agents Claude Code ; `Task` était l'ancien).
 - `tools:` minimal par agent (moindre privilège).
 - Nouvelle compétence → nouveau fichier `.claude/agents/<nom>.md`,
-  puis référencer le routage dans Capitaine America.
+  puis référencer le routage dans Capitaine America (sinon la CI signale
+  un agent orphelin).
 
 ## Sécurité
 
 - Aucun agent n'a `Bash` par défaut.
 - `chercheur`, `juriste`, `trieur`, `verificateur` : lecture seule.
-- Seul `redacteur` peut écrire des fichiers (`Write`, `Edit`).
+- `redacteur` et `archiviste` peuvent écrire des fichiers (`Write`, `Edit`)
+  — `redacteur` pour les livrables, `archiviste` pour la mémoire.
