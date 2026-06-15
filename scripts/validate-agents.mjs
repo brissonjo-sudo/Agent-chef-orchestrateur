@@ -89,14 +89,14 @@ for (const fichier of fichiers) {
   }
 }
 
-// Cohérence du routage : les agents cités dans orchestrateur.md existent
-const cheminOrch = join(AGENTS_DIR, 'orchestrateur.md');
+// Cohérence du routage : les agents cités dans capitaine-america.md existent
+const cheminOrch = join(AGENTS_DIR, 'capitaine-america.md');
 if (existsSync(cheminOrch)) {
   const orch = readFileSync(cheminOrch, 'utf8');
-  const cités = [...orch.matchAll(/`([a-z]+)`\s*\((?:Opus|Sonnet|Haiku)\)/gi)]
+  const cités = [...orch.matchAll(/`([a-z-]+)`\s*\((?:Opus|Sonnet|Haiku)\)/gi)]
     .map((m) => m[1].toLowerCase());
   for (const c of new Set(cités)) {
-    if (c !== 'orchestrateur' && !nomsDeclarés.has(c)) {
+    if (c !== 'capitaine-america' && !nomsDeclarés.has(c)) {
       avertissements.push(
         `orchestrateur.md cite le sous-agent "${c}" mais aucun fichier ${c}.md trouvé.`
       );
