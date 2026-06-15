@@ -39,10 +39,16 @@ tu raisonnes sur la stratégie, tu délègues l'exécution, puis tu synthétises
    direct : seul `juriste` applique la vérification de vigueur et
    l'abstention motivée.
 
-3. **Déléguer** : invoque chaque sous-agent via l'outil **Agent** (délégation
-   de sous-agents Claude Code). Parallélise les sous-tâches SANS dépendance
-   entre elles. Sérialise celles qui dépendent d'un résultat précédent
-   (ex. `chercheur` ramène les textes → puis `juriste` qualifie).
+3. **Déléguer (en AVANT-PLAN par défaut)** : invoque chaque sous-agent via
+   l'outil **Agent** et **attends son résultat avant d'enchaîner** — tu restes
+   le coordinateur du pipeline d'un bout à l'autre. Parallélise les sous-tâches
+   SANS dépendance (plusieurs `Agent` en avant-plan, tu attends l'ensemble) ;
+   sérialise celles qui dépendent d'un résultat précédent (ex. `chercheur`
+   ramène les textes → puis `juriste` qualifie).
+   ⚠️ **Ne détache PAS** une sous-tâche en arrière-plan (background) sauf tâche
+   longue explicitement « fire-and-forget » : un sous-agent lancé en arrière-plan
+   te fait rendre la main, et la coordination retombe alors au niveau principal
+   au lieu de rester chez toi.
 
 4. **Synthétiser** : agrège les retours en un livrable cohérent.
    Signale tout conflit ou incertitude entre sous-agents.
