@@ -2,24 +2,44 @@
 /**
  * Valide les sous-agents Claude Code dans .claude/agents/.
  * Zéro dépendance. Vérifie frontmatter, modèle, cohérence nom/fichier,
- * unicité, et que les agents cités dans l'orchestrateur existent.
+ * unicité, présence d'outils, et cohérence de routage DANS LES DEUX SENS :
+ *   - tout agent cité par l'orchestrateur doit exister (sinon ERREUR) ;
+ *   - tout agent présent doit être routé par l'orchestrateur (sinon ERREUR : orphelin).
  * Sort en code 1 si une erreur est trouvée (fait échouer la CI).
+ *
+ * Durcissements vs version initiale :
+ *   1. Routage incohérent = ERREUR (et non simple avertissement).
+ *   2. Détection des agents orphelins (présents mais jamais routés).
+ *   3. Champ "tools" obligatoire et non vide (moindre privilège explicite).
+ *   4. Lecture des descriptions en bloc YAML ( > ou | ) : une description
+ *      "vide sous un >" n'est plus considérée comme présente.
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
 const AGENTS_DIR = '.claude/agents';
+const ORCHESTRATEUR = 'capitaine-america';
 const MODELES_VALIDES = ['opus', 'sonnet', 'haiku', 'inherit'];
 
 const erreurs = [];
 const avertissements = [];
 
+/** Lit un champ "clé: valeur" simple OU un bloc scalaire ( > / | ). */
 function lireChamp(frontmatter, champ) {
-  const ligne = frontmatter
-    .split('\n')
-    .find((l) => l.trim().startsWith(`${champ}:`));
-  if (!ligne) return null;
-  return ligne.slice(ligne.indexOf(':') + 1).trim();
+  const lignes = frontmatter.split('\n');
+  const idx = lignes.findIndex((l) => l.trim().startsWith(`${champ}:`));
+  if (idx === -1) return null;
+  const brut = lignes[idx].slice(lignes[idx].indexOf(':') + 1).trim();
+  if (brut === '>' || brut === '|' || brut === '>-' || brut === '|-') {
+    const corps = [];
+    for (let i = idx + 1; i < lignes.length; i++) {
+      if (/^\s+\S/.test(lignes[i])) corps.push(lignes[i].trim());
+      else if (lignes[i].trim() === '') continue;
+      else break;
+    }
+    return corps.join(' ').trim() || null;
+  }
+  return brut || null;
 }
 
 function extraireFrontmatter(contenu, fichier) {
@@ -47,7 +67,7 @@ if (fichiers.length === 0) {
 }
 
 const nomsVus = new Map();
-const nomsDeclarés = new Set();
+const nomsDeclares = new Set();
 
 for (const fichier of fichiers) {
   const chemin = join(AGENTS_DIR, fichier);
@@ -58,67 +78,55 @@ for (const fichier of fichiers) {
   const name = lireChamp(fm, 'name');
   const model = lireChamp(fm, 'model');
   const description = lireChamp(fm, 'description');
+  const tools = lireChamp(fm, 'tools');
   const nomFichier = basename(fichier, '.md');
 
-  // Champs obligatoires
   if (!name) erreurs.push(`${fichier} : champ "name" manquant.`);
-  if (!description) erreurs.push(`${fichier} : champ "description" manquant.`);
+  if (!description) erreurs.push(`${fichier} : champ "description" manquant ou vide.`);
   if (!model) {
     erreurs.push(`${fichier} : champ "model" manquant.`);
   } else if (!MODELES_VALIDES.includes(model)) {
-    erreurs.push(
-      `${fichier} : model "${model}" invalide (attendu : ${MODELES_VALIDES.join(', ')}).`
-    );
+    erreurs.push(`${fichier} : model "${model}" invalide (attendu : ${MODELES_VALIDES.join(', ')}).`);
   }
-
-  // Cohérence nom de fichier <-> name
+  if (!tools) {
+    erreurs.push(`${fichier} : champ "tools" manquant ou vide (moindre privilege explicite).`);
+  }
   if (name && name !== nomFichier) {
-    erreurs.push(
-      `${fichier} : name "${name}" ≠ nom de fichier "${nomFichier}".`
-    );
+    erreurs.push(`${fichier} : name "${name}" ≠ nom de fichier "${nomFichier}".`);
   }
-
-  // Unicité
   if (name) {
-    if (nomsVus.has(name)) {
-      erreurs.push(`Doublon de name "${name}" (${fichier} et ${nomsVus.get(name)}).`);
-    } else {
-      nomsVus.set(name, fichier);
-      nomsDeclarés.add(name);
-    }
+    if (nomsVus.has(name)) erreurs.push(`Doublon de name "${name}" (${fichier} et ${nomsVus.get(name)}).`);
+    else { nomsVus.set(name, fichier); nomsDeclares.add(name); }
   }
 }
 
-// Cohérence du routage : les agents cités dans capitaine-america.md existent
-const cheminOrch = join(AGENTS_DIR, 'capitaine-america.md');
-if (existsSync(cheminOrch)) {
+const cheminOrch = join(AGENTS_DIR, `${ORCHESTRATEUR}.md`);
+if (!existsSync(cheminOrch)) {
+  erreurs.push(`Orchestrateur introuvable : ${ORCHESTRATEUR}.md attendu.`);
+} else {
   const orch = readFileSync(cheminOrch, 'utf8');
-  const cités = [...orch.matchAll(/`([a-z-]+)`\s*\((?:Opus|Sonnet|Haiku)\)/gi)]
-    .map((m) => m[1].toLowerCase());
-  for (const c of new Set(cités)) {
-    if (c !== 'capitaine-america' && !nomsDeclarés.has(c)) {
-      avertissements.push(
-        `orchestrateur.md cite le sous-agent "${c}" mais aucun fichier ${c}.md trouvé.`
-      );
+  const cites = new Set(
+    [...orch.matchAll(/`([a-z-]+)`\s*\((?:Opus|Sonnet|Haiku)\)/gi)].map((m) => m[1].toLowerCase())
+  );
+  for (const c of cites) {
+    if (c !== ORCHESTRATEUR && !nomsDeclares.has(c)) {
+      erreurs.push(`Routage incoherent : "${ORCHESTRATEUR}" route vers "${c}" mais ${c}.md n'existe pas.`);
+    }
+  }
+  for (const nom of nomsDeclares) {
+    if (nom !== ORCHESTRATEUR && !cites.has(nom)) {
+      erreurs.push(`Agent orphelin : "${nom}" existe mais n'est route nulle part dans ${ORCHESTRATEUR}.md.`);
     }
   }
 }
 
-// Rapport
-console.log(`\nAgents analysés : ${fichiers.length} → ${[...nomsDeclarés].join(', ')}\n`);
-
-if (avertissements.length) {
-  console.log('⚠ Avertissements :');
-  avertissements.forEach((a) => console.log(`  - ${a}`));
-  console.log('');
-}
-
+console.log(`\nAgents analyses : ${fichiers.length} → ${[...nomsDeclares].join(', ')}\n`);
+if (avertissements.length) { console.log('⚠ Avertissements :'); avertissements.forEach((a) => console.log(`  - ${a}`)); console.log(''); }
 if (erreurs.length) {
   console.error('✗ Erreurs :');
   erreurs.forEach((e) => console.error(`  - ${e}`));
-  console.error(`\n${erreurs.length} erreur(s). Validation échouée.`);
+  console.error(`\n${erreurs.length} erreur(s). Validation echouee.`);
   process.exit(1);
 }
-
 console.log('✓ Tous les agents sont valides.');
 process.exit(0);
