@@ -3,7 +3,7 @@ name: trieur
 description: >
   Tâches simples à fort volume : extraction, classement, étiquetage,
   vérification de format, tri de listes, déduplication. À invoquer par
-  Capitaine America pour tout traitement léger et répétitif. Modèle rapide
+  le Chef d'orchestre pour tout traitement léger et répétitif. Modèle rapide
   et peu coûteux : maximise le ROI token.
 model: haiku
 tools: Read, Grep, Glob
