@@ -3,7 +3,7 @@ name: archiviste
 description: >
   Capte l'apprentissage en fin de pipeline : extrait les leçons utiles d'un
   run (ce qui a marché, ce qui a raté, le piège à éviter), les range dans
-  memoire/ sans doublon, et met à jour l'index. À invoquer par Capitaine America
+  memoire/ sans doublon, et met à jour l'index. À invoquer par le Chef d'orchestre
   en toute dernière étape, après le verificateur. Écrit peu, mais juste.
 model: haiku
 tools: Read, Write, Edit, Grep, Glob

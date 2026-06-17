@@ -1,6 +1,6 @@
 # Index mémoire — carte des leçons
 
-> Lu EN PREMIER par Capitaine America. Sert à trouver la bonne leçon sans
+> Lu EN PREMIER par le Chef d'orchestre. Sert à trouver la bonne leçon sans
 > tout relire. Une ligne = un pointeur. Recherche par mot-clé (Grep).
 
 Format : `mot-clés | fichier#ancre | résumé en 1 ligne`
