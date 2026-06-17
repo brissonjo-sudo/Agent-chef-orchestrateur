@@ -18,7 +18,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
 const AGENTS_DIR = '.claude/agents';
-const ORCHESTRATEUR = 'capitaine-america';
+const ORCHESTRATEUR = 'chef-orchestre';
 const MODELES_VALIDES = ['opus', 'sonnet', 'haiku', 'inherit'];
 
 const erreurs = [];
