@@ -3,7 +3,7 @@ name: verificateur
 description: >
   Contrôle qualité d'un livrable avant remise : cohérence interne, complétude,
   respect du format demandé, et — pour les livrables institutionnels —
-  présence des mentions obligatoires. À invoquer par Capitaine America en
+  présence des mentions obligatoires. À invoquer par le Chef d'orchestre en
   dernière étape, sur les productions à enjeu (acte officiel, note au Maire,
   réponse institutionnelle). Relit, ne réécrit pas : il signale, l'agent
   producteur corrige.

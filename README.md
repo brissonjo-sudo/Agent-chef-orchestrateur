@@ -1,6 +1,6 @@
 # Orchestration Locale — Claude Code
 
-Orchestration native Claude Code : **Capitaine America** (Opus) décompose une
+Orchestration native Claude Code : **Chef d'orchestre** (Opus) décompose une
 demande, route chaque sous-tâche vers le sous-agent au modèle adapté, puis
 synthétise. Optimisé pour le rendement qualité/token.
 
@@ -8,7 +8,7 @@ synthétise. Optimisé pour le rendement qualité/token.
 
 | Sous-agent          | Modèle | Rôle                                              |
 |---------------------|--------|---------------------------------------------------|
-| `capitaine-america` | Opus   | Décompose, analyse, route, synthétise             |
+| `chef-orchestre`    | Opus   | Décompose, analyse, route, synthétise             |
 | `chercheur`         | Haiku  | Collecte / lecture volumineuse (amont)            |
 | `juriste`           | Opus   | Droit français (skill `recherche-juridique`)      |
 | `redacteur`         | Sonnet | Rédaction + accessibilité TDAH                    |
@@ -19,7 +19,7 @@ synthétise. Optimisé pour le rendement qualité/token.
 ## Pipeline type
 
 `collecte (chercheur)` → `production (juriste / redacteur)`
-→ `contrôle (verificateur)` → `synthèse (capitaine-america)`
+→ `contrôle (verificateur)` → `synthèse (chef-orchestre)`
 → `apprentissage (archiviste)`.
 
 ## Mémoire d'expérience
@@ -40,7 +40,7 @@ memoire/
 
 ```
 claude
-> Utilise Capitaine America pour [tâche complexe]
+> Utilise le Chef d'orchestre pour [tâche complexe]
 ```
 
 Claude Code détecte automatiquement les agents dans `.claude/agents/`.

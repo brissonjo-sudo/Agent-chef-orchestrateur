@@ -3,7 +3,7 @@ name: chercheur
 description: >
   Collecte et lecture volumineuse : ramène les textes officiels (Légifrance,
   JORF, jurisprudence), explore des fichiers, agrège des sources brutes. À
-  invoquer par Capitaine America EN AMONT d'une tâche de raisonnement, pour
+  invoquer par le Chef d'orchestre EN AMONT d'une tâche de raisonnement, pour
   isoler le bruit de la recherche hors du contexte des agents qui raisonnent.
   Ne qualifie pas, ne décide pas : il rapporte du brut vérifié.
 model: haiku
