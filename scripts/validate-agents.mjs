@@ -9,10 +9,11 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
 const AGENTS_DIR = '.claude/agents';
-const MODELES_VALIDES = ['opus', 'sonnet', 'haiku', 'inherit'];
+// Modèle verrouillé (règle CLAUDE.md) : pas d'`inherit`, chaque agent fixe
+// explicitement son modèle pour un coût prévisible.
+const MODELES_VALIDES = ['opus', 'sonnet', 'haiku'];
 
 const erreurs = [];
-const avertissements = [];
 
 function lireChamp(frontmatter, champ) {
   // On ne matche que les clés de niveau 0 (colonne 0). Les lignes de
@@ -102,8 +103,8 @@ if (existsSync(cheminOrch)) {
     .map((m) => m[1].toLowerCase());
   for (const c of new Set(cités)) {
     if (c !== 'capitaine-america' && !nomsDeclarés.has(c)) {
-      avertissements.push(
-        `${FICHIER_ORCH} cite le sous-agent "${c}" mais aucun fichier ${c}.md trouvé.`
+      erreurs.push(
+        `${FICHIER_ORCH} route vers le sous-agent "${c}" mais aucun fichier ${c}.md trouvé.`
       );
     }
   }
@@ -111,12 +112,6 @@ if (existsSync(cheminOrch)) {
 
 // Rapport
 console.log(`\nAgents analysés : ${fichiers.length} → ${[...nomsDeclarés].join(', ')}\n`);
-
-if (avertissements.length) {
-  console.log('⚠ Avertissements :');
-  avertissements.forEach((a) => console.log(`  - ${a}`));
-  console.log('');
-}
 
 if (erreurs.length) {
   console.error('✗ Erreurs :');

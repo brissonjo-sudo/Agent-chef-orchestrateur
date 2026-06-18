@@ -12,6 +12,7 @@ on:
     paths:
       - '.claude/agents/**'
       - 'scripts/validate-agents.mjs'
+      - '.github/workflows/validate-agents.yml'
 
 jobs:
   validate:

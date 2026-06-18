@@ -35,6 +35,6 @@ et les règles de sécurité.
 
 ## CI
 
-`scripts/validate-agents.mjs` valide le frontmatter et le modèle à chaque
-push (workflow `.github/workflows/`), et **signale** (avertissement non
-bloquant) toute incohérence de routage.
+`scripts/validate-agents.mjs` valide à chaque push (workflow
+`.github/workflows/`) le frontmatter, le modèle et la cohérence du routage.
+Toute anomalie fait échouer la CI.
