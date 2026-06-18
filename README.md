@@ -14,6 +14,7 @@ adapté, puis synthétise. Optimisé pour le rendement qualité/token.
 | `redacteur`    | Sonnet | Rédaction + accessibilité TDAH             |
 | `trieur`       | Haiku  | Extraction / classement                    |
 | `verificateur` | Sonnet | Contrôle qualité du livrable (aval)        |
+| `archiviste`   | Haiku  | Capte les leçons en mémoire (apprentissage)|
 
 ## Pipeline type
 
@@ -34,5 +35,6 @@ et les règles de sécurité.
 
 ## CI
 
-`scripts/validate-agents.mjs` valide le frontmatter, le modèle et la
-cohérence du routage à chaque push (workflow `.github/workflows/`).
+`scripts/validate-agents.mjs` valide le frontmatter et le modèle à chaque
+push (workflow `.github/workflows/`), et **signale** (avertissement non
+bloquant) toute incohérence de routage.

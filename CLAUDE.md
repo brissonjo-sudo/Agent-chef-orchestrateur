@@ -15,7 +15,6 @@ synthétise. Conçu pour optimiser le rendement qualité/token.
 ├── trieur.md          # Haiku  — extraction / classement
 ├── verificateur.md    # Sonnet — contrôle qualité du livrable (aval)
 └── archiviste.md      # Haiku  — capte les leçons en mémoire (apprentissage)
-```
 
 memoire/                # Mémoire d'expérience (relue à chaque run)
 ├── index.md            # carte des leçons — lue en premier, recherche Grep

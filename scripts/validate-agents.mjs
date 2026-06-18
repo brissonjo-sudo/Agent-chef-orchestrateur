@@ -15,9 +15,13 @@ const erreurs = [];
 const avertissements = [];
 
 function lireChamp(frontmatter, champ) {
+  // On ne matche que les clés de niveau 0 (colonne 0). Les lignes de
+  // continuation indentées d'un scalaire replié (`description: >`) sont
+  // exclues : sans ce garde-fou, une continuation « model: … » masquerait
+  // la vraie clé, et une `description:` repliée serait jugée vide.
   const ligne = frontmatter
     .split('\n')
-    .find((l) => l.trim().startsWith(`${champ}:`));
+    .find((l) => l.startsWith(`${champ}:`));
   if (!ligne) return null;
   return ligne.slice(ligne.indexOf(':') + 1).trim();
 }
@@ -89,8 +93,9 @@ for (const fichier of fichiers) {
   }
 }
 
-// Cohérence du routage : les agents cités dans capitaine-america.md existent
-const cheminOrch = join(AGENTS_DIR, 'capitaine-america.md');
+// Cohérence du routage : les agents cités dans l'orchestrateur existent
+const FICHIER_ORCH = 'capitaine-america.md';
+const cheminOrch = join(AGENTS_DIR, FICHIER_ORCH);
 if (existsSync(cheminOrch)) {
   const orch = readFileSync(cheminOrch, 'utf8');
   const cités = [...orch.matchAll(/`([a-z-]+)`\s*\((?:Opus|Sonnet|Haiku)\)/gi)]
@@ -98,7 +103,7 @@ if (existsSync(cheminOrch)) {
   for (const c of new Set(cités)) {
     if (c !== 'capitaine-america' && !nomsDeclarés.has(c)) {
       avertissements.push(
-        `orchestrateur.md cite le sous-agent "${c}" mais aucun fichier ${c}.md trouvé.`
+        `${FICHIER_ORCH} cite le sous-agent "${c}" mais aucun fichier ${c}.md trouvé.`
       );
     }
   }
