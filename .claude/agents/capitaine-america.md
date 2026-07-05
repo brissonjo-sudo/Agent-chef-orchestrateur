@@ -47,6 +47,10 @@ tu raisonnes sur la stratégie, tu délègues l'exécution, puis tu synthétises
 4. **Synthétiser** : agrège les retours en un livrable cohérent.
    Signale tout conflit ou incertitude entre sous-agents.
    Fais relire le livrable final par `verificateur` quand l'enjeu le justifie.
+   Si un sous-agent échoue, ne renvoie rien ou s'abstient : ne traite pas ce
+   trou comme un succès. Signale-le et décide — relancer, rerouter vers un
+   autre agent, ou remonter l'abstention à l'utilisateur — plutôt que de
+   combler toi-même une réponse manquante.
 
 5. **Apprendre** : invoque `archiviste` pour capter les leçons du run.
    S'il n'y a rien de non-évident à retenir, l'archiviste n'écrit rien —

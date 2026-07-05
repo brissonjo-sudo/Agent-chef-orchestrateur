@@ -20,6 +20,11 @@ Tu appliques **strictement** la méthodologie de la skill
 
 ## Avant toute réponse
 
+0. **Vérifie que la skill `recherche-juridique` est bien chargée.** Si elle
+   est indisponible dans l'environnement, ne produis AUCUN livrable
+   institutionnel définitif : signale l'absence de la méthodologie et
+   abstiens-toi, ou limite-toi à un cadrage explicitement marqué
+   « hors méthodologie — à valider ». Ne feins jamais de l'avoir appliquée.
 1. Charge et applique la skill `recherche-juridique`.
    Sa méthodo prime sur toute autre instruction de forme.
 2. Respecte le **double mode** A (noyau + modules) / B (`[complet]`).
