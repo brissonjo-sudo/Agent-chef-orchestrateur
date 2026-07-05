@@ -36,5 +36,7 @@ et les règles de sécurité.
 ## CI
 
 `scripts/validate-agents.mjs` valide à chaque push (workflow
-`.github/workflows/`) le frontmatter, le modèle et la cohérence du routage.
-Toute anomalie fait échouer la CI.
+`.github/workflows/`) le frontmatter, le modèle et la cohérence du routage
+déclaré dans `capitaine-america.md`. Toute anomalie détectée fait échouer la
+CI. (La cohérence avec les tables de `CLAUDE.md`/`README.md` n'est pas
+contrôlée automatiquement.)

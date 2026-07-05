@@ -37,6 +37,7 @@ memoire/                # Mémoire d'expérience (relue à chaque run)
 | Rédaction, synthèse rédigée      | `redacteur`     | Sonnet |
 | Extraction, tri, classement      | `trieur`        | Haiku  |
 | Contrôle qualité du livrable     | `verificateur`  | Sonnet |
+| Capture des leçons (fin de run)  | `archiviste`    | Haiku  |
 
 Logique de découpe : on sépare la **collecte bruyante** (chercheur, Haiku)
 du **raisonnement** (juriste/Capitaine America, Opus), et on ajoute un filet
@@ -113,4 +114,5 @@ Invocation directe d'un sous-agent :
 
 - Aucun agent n'a `Bash` par défaut.
 - `chercheur`, `juriste`, `trieur`, `verificateur` : lecture seule.
-- Seul `redacteur` peut écrire des fichiers (`Write`, `Edit`).
+- Écriture de fichiers réservée à deux agents : `redacteur` (livrables) et
+  `archiviste` (mémoire, borné à `memoire/`). Les autres sont en lecture seule.

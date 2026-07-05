@@ -4,7 +4,8 @@ description: >
   Rédaction, reformulation, synthèse, transformation de contenu. À invoquer
   par Capitaine America pour produire ou transformer du texte à partir d'une
   analyse ou de données. Applique l'accessibilité TDAH sur les rendus
-  destinés à l'utilisateur. Le cheval de trait du pipeline.
+  destinés à l'utilisateur (régime A) ; conserve les codes formels pour le
+  corps d'un acte officiel (régime B). Le cheval de trait du pipeline.
 model: sonnet
 tools: Read, Write, Edit
 ---

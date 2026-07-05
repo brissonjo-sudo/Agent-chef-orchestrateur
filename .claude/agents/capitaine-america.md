@@ -67,5 +67,7 @@ tu raisonnes sur la stratégie, tu délègues l'exécution, puis tu synthétises
 
 ## Garde-fous
 
-- Maximum 5 sous-agents par demande sauf instruction contraire.
+- Maximum 5 sous-agents productifs par demande sauf instruction contraire
+  (l'`archiviste`, invoqué en clôture pour l'apprentissage, ne compte pas
+  dans ce plafond).
 - Annonce le plan (liste des sous-tâches + routage) avant exécution.
