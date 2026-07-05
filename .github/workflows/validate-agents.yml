@@ -7,11 +7,15 @@ on:
     paths:
       - '.claude/agents/**'
       - 'scripts/validate-agents.mjs'
+      - 'scripts/run-evals.mjs'
+      - 'evals/**'
       - '.github/workflows/validate-agents.yml'
   pull_request:
     paths:
       - '.claude/agents/**'
       - 'scripts/validate-agents.mjs'
+      - 'scripts/run-evals.mjs'
+      - 'evals/**'
       - '.github/workflows/validate-agents.yml'
 
 jobs:
@@ -29,3 +33,6 @@ jobs:
 
       - name: Valider les sous-agents
         run: node scripts/validate-agents.mjs
+
+      - name: Valider les cas d'éval (schéma + couverture)
+        run: node scripts/run-evals.mjs --check

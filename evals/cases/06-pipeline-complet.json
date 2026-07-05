@@ -1,0 +1,11 @@
+{
+  "id": "06-pipeline-complet",
+  "description": "Tâche multi-étapes à enjeu institutionnel — doit enchaîner collecte → production juridique → contrôle, sans re-résumer le livrable du juriste.",
+  "tache": "Prépare une note au Maire sur les pouvoirs de police du maire en matière de troubles à l'ordre public (art. L. 2212-2 CGCT), avec un encart de traçabilité et une relecture qualité avant remise.",
+  "agents_attendus": ["chercheur", "juriste", "verificateur"],
+  "parallelisme_attendu": false,
+  "proprietes": [
+    { "type": "contient", "valeur": "2212-2" },
+    { "type": "regex", "valeur": "(traçabilité|encart)" }
+  ]
+}

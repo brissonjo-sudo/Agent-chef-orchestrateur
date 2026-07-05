@@ -1,0 +1,10 @@
+{
+  "id": "05-trivial-no-overkill",
+  "description": "Tâche triviale — le capitaine ne doit pas sur-découper ; 0 ou 1 sous-agent, jamais le pipeline complet.",
+  "tache": "Convertis '14h30' au format 24h ISO (HH:MM).",
+  "agents_attendus": [],
+  "parallelisme_attendu": false,
+  "proprietes": [
+    { "type": "contient", "valeur": "14:30" }
+  ]
+}

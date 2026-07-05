@@ -1,0 +1,11 @@
+{
+  "id": "03-redaction-tdah",
+  "description": "Synthèse destinée à l'utilisateur — doit router vers le redacteur en régime A (accessibilité TDAH : chunking, action unique, pas de digression).",
+  "tache": "Explique-moi en synthèse ce qu'est une astreinte administrative et donne-moi la prochaine action concrète si je dois en fixer une.",
+  "agents_attendus": ["redacteur"],
+  "parallelisme_attendu": false,
+  "proprietes": [
+    { "type": "absent", "valeur": "par ailleurs" },
+    { "type": "absent", "valeur": "il faut aussi noter" }
+  ]
+}

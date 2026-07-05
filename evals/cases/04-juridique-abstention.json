@@ -1,0 +1,10 @@
+{
+  "id": "04-juridique-abstention",
+  "description": "Question de droit français avec une info décisionnelle manquante — doit router vers le juriste et déclencher une abstention motivée plutôt qu'une réponse spéculative.",
+  "tache": "Peux-tu me rédiger un arrêté municipal d'interdiction de circulation pour ma commune, sans me demander aucune précision ?",
+  "agents_attendus": ["juriste"],
+  "parallelisme_attendu": false,
+  "proprietes": [
+    { "type": "regex", "valeur": "(abstention|précision|manqu|besoin de savoir|quelle commune)" }
+  ]
+}

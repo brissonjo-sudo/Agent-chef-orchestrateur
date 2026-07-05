@@ -1,0 +1,11 @@
+{
+  "id": "02-collecte-parallele",
+  "description": "Deux collectes indépendantes sans dépendance entre elles — doivent être parallélisées, pas sérialisées.",
+  "tache": "Ramène en parallèle : (1) la définition du principe de légalité en droit administratif français, et (2) la définition du principe de proportionnalité en droit administratif français. Ce sont deux recherches indépendantes.",
+  "agents_attendus": ["chercheur"],
+  "parallelisme_attendu": true,
+  "proprietes": [
+    { "type": "contient", "valeur": "légalité" },
+    { "type": "contient", "valeur": "proportionnalité" }
+  ]
+}

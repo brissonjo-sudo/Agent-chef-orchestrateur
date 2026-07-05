@@ -1,0 +1,11 @@
+{
+  "id": "01-tri-dedup",
+  "description": "Tâche simple de classement/déduplication — doit router vers le trieur, contrôle optionnel du verificateur.",
+  "tache": "Classe et déduplique cette liste en 2 catégories (fruits / légumes) : tomate, pomme, carotte, banane, pomme, courgette, poire, tomate.",
+  "agents_attendus": ["trieur"],
+  "parallelisme_attendu": false,
+  "proprietes": [
+    { "type": "contient", "valeur": "Carotte" },
+    { "type": "contient", "valeur": "Banane" }
+  ]
+}
