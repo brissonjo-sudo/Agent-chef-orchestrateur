@@ -40,3 +40,10 @@ et les règles de sécurité.
 déclaré dans `capitaine-america.md`. Toute anomalie détectée fait échouer la
 CI. (La cohérence avec les tables de `CLAUDE.md`/`README.md` n'est pas
 contrôlée automatiquement.)
+
+`scripts/run-evals.mjs --check` valide en plus, à chaque push, le schéma des
+scénarios-témoins d'`evals/cases/` et la couverture des agents routables —
+c'est le complément qui juge la *sortie* du pipeline, pas seulement sa
+structure. Mode `--run` (hors CI, opt-in) : exécute réellement chaque
+scénario via le CLI `claude` et vérifie les propriétés attendues. Voir
+`evals/cases/*.json` pour le format d'un cas.

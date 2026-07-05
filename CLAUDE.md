@@ -44,6 +44,14 @@ du **raisonnement** (juriste/Capitaine America, Opus), et on ajoute un filet
 de **contrôle** (verificateur) avant tout livrable à enjeu. Le contexte des
 agents Opus reste propre → meilleure qualité à coût maîtrisé.
 
+Le routage n'est pas une application mécanique de la table ci-dessus :
+Capitaine America jauge d'abord la complexité de la demande (nombre de
+compétences, dépendances, enjeu) et déduit le nombre minimal de sous-agents
+à invoquer — la table sert de référence pour *quel* agent, pas de gabarit
+imposant *combien*. Les sous-tâches sans dépendance entre elles sont
+lancées en parallèle (un seul tour d'appels `Task`) ; seules les vraies
+chaînes sont sérialisées. Voir `capitaine-america.md` étapes 2-3.
+
 ## Accessibilité TDAH
 
 L'utilisateur est TDAH. Le `redacteur` applique le skill `accessibilite-tdah`
@@ -116,3 +124,13 @@ Invocation directe d'un sous-agent :
 - `chercheur`, `juriste`, `trieur`, `verificateur` : lecture seule.
 - Écriture de fichiers réservée à deux agents : `redacteur` (livrables) et
   `archiviste` (mémoire, borné à `memoire/`). Les autres sont en lecture seule.
+
+## Éval de qualité de sortie
+
+`scripts/validate-agents.mjs` ne juge que la *structure* des agents. Pour
+juger leur *comportement réel*, `evals/cases/*.json` décrit des scénarios-
+témoins (tâche + agents attendus + propriétés du livrable) rejoués par
+`scripts/run-evals.mjs`. `--check` (CI) valide le schéma et la couverture
+des agents routables ; `--run` (manuel, hors CI) exécute réellement le
+pipeline via le CLI `claude` et compare la sortie aux propriétés attendues.
+Nouvelle capacité de routage → ajouter un cas correspondant.
