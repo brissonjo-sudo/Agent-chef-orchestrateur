@@ -1,11 +1,11 @@
 {
   "id": "02-collecte-parallele",
-  "description": "Deux collectes indépendantes sans dépendance entre elles — doivent être parallélisées, pas sérialisées.",
-  "tache": "Ramène en parallèle : (1) la définition du principe de légalité en droit administratif français, et (2) la définition du principe de proportionnalité en droit administratif français. Ce sont deux recherches indépendantes.",
+  "description": "Deux collectes factuelles indépendantes (non juridiques, pour ne pas déclencher l'invariant « toute sous-tâche juridique passe par juriste ») — doivent être parallélisées, pas sérialisées.",
+  "tache": "Ramène en parallèle : (1) l'année de fondation de l'Organisation des Nations Unies, et (2) l'année de fondation de l'Union européenne (traité de Maastricht). Ce sont deux recherches factuelles indépendantes, sans lien de dépendance entre elles.",
   "agents_attendus": ["chercheur"],
   "parallelisme_attendu": true,
   "proprietes": [
-    { "type": "contient", "valeur": "légalité" },
-    { "type": "contient", "valeur": "proportionnalité" }
+    { "type": "contient", "valeur": "1945" },
+    { "type": "contient", "valeur": "1993" }
   ]
 }
