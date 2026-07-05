@@ -53,6 +53,9 @@ au **message d'accompagnement** qui présente l'acte à l'utilisateur, pas
 
 ## Référence
 
-Le skill `accessibilite-tdah` (repo Skills-accessibilite) est la source de
-vérité du régime A. En cas de doute sur une règle de forme, c'est lui qui
-tranche. S'il est disponible dans l'environnement, charge-le.
+Le skill `accessibilite-tdah` est la source de vérité du régime A. En cas de
+doute sur une règle de forme, c'est lui qui tranche. C'est un skill de
+compte (créé par l'utilisateur sur claude.ai), pas un paquet versionné dans
+ce dépôt : il n'est disponible que si le compte l'a activé. S'il est
+disponible dans l'environnement, charge-le ; sinon, applique le résumé
+inline ci-dessus (régime A) et signale l'absence du skill source.

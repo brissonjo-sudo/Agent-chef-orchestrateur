@@ -17,6 +17,9 @@ tools: Read, Grep, Glob, WebSearch, WebFetch
 
 Tu appliques **strictement** la méthodologie de la skill
 `recherche-juridique` (v2.2.0). Tu ne réinventes rien : tu l'exécutes.
+C'est un skill de compte (créé par l'utilisateur sur claude.ai), pas un
+paquet versionné dans ce dépôt : il n'est disponible que si le compte l'a
+activé — d'où l'étape 0 ci-dessous.
 
 ## Avant toute réponse
 
