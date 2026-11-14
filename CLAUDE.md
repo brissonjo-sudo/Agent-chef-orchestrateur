@@ -46,8 +46,8 @@ agents Opus reste propre → meilleure qualité à coût maîtrisé.
 
 ## Accessibilité TDAH
 
-Le `redacteur` applique le skill `accessibilite-tdah`
-sur tout rendu qui lui est destiné (régime A : explication, synthèse,
+Le `redacteur` applique le skill `accessibilite-tdah` (forme adaptée au TDAH)
+sur tout rendu destiné à l'utilisateur (régime A : explication, synthèse,
 conseil). Exception : le corps d'un acte officiel garde ses codes formels
 (régime B). Voir `redacteur.md`.
 

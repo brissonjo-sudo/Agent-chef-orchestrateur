@@ -7,6 +7,7 @@ description: >
   destinés à l'utilisateur. Le cheval de trait du pipeline.
 model: sonnet
 tools: Read, Write, Edit
+skills: accessibilite-tdah
 ---
 
 # Rôle : Rédacteur

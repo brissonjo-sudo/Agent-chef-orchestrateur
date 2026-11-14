@@ -91,6 +91,12 @@ for (const fichier of fichiers) {
   if (!tools) {
     erreurs.push(`${fichier} : champ "tools" manquant ou vide (moindre privilege explicite).`);
   }
+  // Un agent restreint par "tools" ne charge un skill que s'il est déclaré dans "skills".
+  const skills = (lireChamp(fm, 'skills') || '').replace(/[\[\]]/g, '').split(',').map((s) => s.trim()).filter(Boolean);
+  const corps = contenu.slice(contenu.indexOf('\n---', 3) + 4);
+  for (const m of corps.matchAll(/(?:la |le )?skill\s+`([a-z0-9-]+)`/gi)) {
+    if (!skills.includes(m[1])) erreurs.push(`${fichier} : skill "${m[1]}" cité mais absent du champ "skills".`);
+  }
   if (name && name !== nomFichier) {
     erreurs.push(`${fichier} : name "${name}" ≠ nom de fichier "${nomFichier}".`);
   }

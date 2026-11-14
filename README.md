@@ -36,6 +36,26 @@ memoire/
 └── journal.md           # historique des runs (tâches longues)
 ```
 
+## Prérequis
+
+- [Claude Code](https://code.claude.com/docs) ; aucun autre outil (Node.js 20 seulement pour la validation).
+- Deux skills, chargés automatiquement par les agents qui en dépendent (champ `skills:`) :
+  - `recherche-juridique` pour `juriste` : dépôt [droit-francais-skill](https://github.com/brissonjo-sudo/droit-francais-skill) ;
+  - `accessibilite-tdah` pour `redacteur` : dépôt [Skills-accessibilite](https://github.com/brissonjo-sudo/Skills-accessibilite).
+
+  Sans eux, ces deux agents ne peuvent pas appliquer leur méthode.
+
+## Installation
+
+1. **Dans ce projet** : cloner le dépôt et lancer `claude` à sa racine. Les agents de
+   `.claude/agents/` sont détectés automatiquement.
+2. **Dans tous vos projets** : copier les fichiers de `.claude/agents/` dans
+   `~/.claude/agents/`. La mémoire `memoire/` reste propre à chaque projet : copier aussi
+   ce dossier à la racine du projet où l'orchestration doit apprendre.
+3. **Vérifier** : la commande `/agents` de Claude Code liste les 7 agents ; à la racine du
+   dépôt, `node scripts/validate-agents.mjs` affiche « Tous les agents sont valides ».
+4. **Mettre à jour** : `git pull`, puis recopier les fichiers si vous avez choisi l'étape 2.
+5. **Désinstaller** : supprimer les fichiers copiés de `~/.claude/agents/` (ou le dépôt).
 ## Utilisation
 
 ```
@@ -53,3 +73,12 @@ la mémoire et les règles de sécurité.
 unicité, présence d'outils, et **cohérence de routage dans les deux sens**
 (agent cité inexistant **ou** agent orphelin jamais routé → échec CI).
 Workflow dans `.github/workflows/`.
+## Retours
+
+Ouvrir une *issue* : agent mal routé, skill non chargé, leçon de mémoire inutile.
+Signaux suivis : à J+7, une installation essayée et son résultat ; à J+30, une
+orchestration réelle rapportée (tâche, agents appelés, livrable utile ou non).
+
+## Licence
+
+MIT, voir [LICENSE](LICENSE).

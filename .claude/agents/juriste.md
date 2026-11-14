@@ -10,6 +10,7 @@ description: >
   peut finir dans un acte officiel : rigueur > fluidité, abstention
   informée > complétion spéculative.
 model: opus
+skills: recherche-juridique
 tools: Read, Grep, Glob, WebSearch, WebFetch
 ---
 
