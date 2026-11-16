@@ -11,4 +11,8 @@
 - **Source** : run du AAAA-MM-JJ
 -->
 
-_(vide)_
+### sous-agents-arriere-plan-attendre
+- **Déclencheur** : le Chef d'orchestre lance plusieurs sous-agents via l'outil Agent, même si la consigne demande l'avant-plan.
+- **Leçon** : le harnais peut exécuter ces sous-agents en arrière-plan. Ne pas enchaîner l'étape suivante ni synthétiser avant la notification de fin de chaque sous-agent concerné.
+- **Coût évité** : synthèse bâtie sur des résultats incomplets, à reprendre.
+- **Source** : run du 2026-11-15. ⚠ à confirmer (comportement du harnais, observé sur un seul run).

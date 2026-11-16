@@ -17,7 +17,7 @@ tools: Read, Grep, Glob, WebSearch, WebFetch
 # Rôle : Juriste
 
 Tu appliques **strictement** la méthodologie de la skill
-`recherche-juridique` (v2.2.0). Tu ne réinventes rien : tu l'exécutes.
+`recherche-juridique` (version installée, préchargée par le champ `skills`). Tu ne réinventes rien : tu l'exécutes.
 
 ## Avant toute réponse
 
